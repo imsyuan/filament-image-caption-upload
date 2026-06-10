@@ -17,9 +17,9 @@ class ImageCaptionUpload extends FileUpload
 {
     protected string $view = 'image-caption-upload::forms.components.image-caption-upload';
 
-    protected string|Closure $captionPlaceholder = 'Caption...';
+    protected string | Closure | null $captionPlaceholder = null;
 
-    public function captionPlaceholder(string|Closure $placeholder): static
+    public function captionPlaceholder(string | Closure $placeholder): static
     {
         $this->captionPlaceholder = $placeholder;
 
@@ -28,19 +28,20 @@ class ImageCaptionUpload extends FileUpload
 
     public function getCaptionPlaceholder(): string
     {
-        return $this->evaluate($this->captionPlaceholder);
+        return $this->evaluate($this->captionPlaceholder)
+            ?? __('image-caption-upload::translations.caption_placeholder');
     }
 
     /** Key inside $livewire->data used to store the captions map. */
     public function getCaptionsStateKey(): string
     {
-        return '_icap_'.str_replace(['.', '[', ']'], '_', $this->getStatePath(false));
+        return '_icap_' . str_replace(['.', '[', ']'], '_', $this->getStatePath(false));
     }
 
     /** Dotted path for $wire.entangle in the Blade view. */
     public function getCaptionsEntanglePath(): string
     {
-        return 'data.'.$this->getCaptionsStateKey();
+        return 'data.' . $this->getCaptionsStateKey();
     }
 
     /** Returns the current captions map (uuid → caption) for Alpine initialization. */

@@ -38,10 +38,15 @@
     "require-dev": {
         "orchestra/testbench": "^8.0",
         "pestphp/pest": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.0"
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "larastan/larastan": "^2.9",
+        "laravel/pint": "^1.0",
+        "phpstan/phpstan": "^1.11"
     },
     "scripts": {
-        "test": "vendor/bin/pest"
+        "test": "vendor/bin/pest",
+        "analyse": "vendor/bin/phpstan analyse",
+        "format": "vendor/bin/pint"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

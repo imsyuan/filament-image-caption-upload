@@ -1,3 +1,5 @@
 <?php
 
-uses(Imsyuan\ImageCaptionUpload\Tests\TestCase::class)->in('Feature', 'Unit');
+use Imsyuan\ImageCaptionUpload\Tests\TestCase;
+
+uses(TestCase::class)->in('Feature', 'Unit');

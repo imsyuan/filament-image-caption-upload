@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to an undefined property Filament\\\\Forms\\\\Contracts\\\\HasForms\\:\\:\\$data\\.$#"
+			count: 3
+			path: src/Forms/Components/ImageCaptionUpload.php

@@ -27,6 +27,54 @@
     :field="$field"
     label-tag="div"
 >
+    @once
+    <style>
+        .ic-caption-input {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            font-family: inherit;
+            color: #111827;
+            padding: 0.375rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            transition: color 75ms ease, background-color 75ms ease,
+                        border-color 75ms ease, box-shadow 75ms ease;
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+        }
+        .ic-caption-input::placeholder { color: #9ca3af; }
+        .ic-caption-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 1px #3b82f6 inset;
+            position: relative;
+            z-index: 1;
+        }
+        .dark .ic-caption-input {
+            background-color: #374151;
+            color: #ffffff;
+            border-color: #4b5563;
+        }
+        .dark .ic-caption-input::placeholder { color: #6b7280; }
+        .dark .ic-caption-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 1px #3b82f6 inset;
+        }
+        .ic-caption-wrap {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0.25rem 0.5rem 0.375rem;
+            pointer-events: none;
+        }
+        .ic-caption-wrap .ic-caption-input { pointer-events: auto; }
+    </style>
+    @endonce
     {{-- ─────────────────────────────────────────────────────────────────────────
          Outer wrapper: manages captions via Alpine.js + $wire.entangle.
          MutationObserver watches for Filepond panel items; injects caption inputs.
