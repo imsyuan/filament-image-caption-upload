@@ -5,6 +5,8 @@
 [![PHPStan](https://img.shields.io/github/actions/workflow/status/imsyuan/filament-image-caption-upload/phpstan.yml?branch=main&label=phpstan&style=flat-square)](https://github.com/imsyuan/filament-image-caption-upload/actions?query=workflow%3Aphpstan+branch%3Amain)
 [![License](https://img.shields.io/packagist/l/imsyuan/filament-image-caption-upload.svg?style=flat-square)](https://packagist.org/packages/imsyuan/filament-image-caption-upload)
 
+**English** | [繁體中文](README.zh-TW.md)
+
 A [Filament v3](https://filamentphp.com) form component that extends the built-in `FileUpload` to attach a per-image caption beneath each uploaded file — with no build step required.
 
 ![Demo](https://raw.githubusercontent.com/imsyuan/filament-image-caption-upload/main/art/demo.png)
