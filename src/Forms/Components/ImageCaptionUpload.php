@@ -83,7 +83,13 @@ class ImageCaptionUpload extends FileUpload
 
                     // Let parent assign UUIDs — state becomes {uuid: path}.
                     if ($parentHydrate) {
-                        $component->evaluate($parentHydrate, ['state' => $paths]);
+                        if (method_exists($component, 'hydrateFiles')) {
+                            // Filament 5: parent closure calls hydrateFiles() internally.
+                            $component->rawState($paths);
+                            $component->hydrateFiles();
+                        } else {
+                            $component->evaluate($parentHydrate, ['state' => $paths]);
+                        }
                     }
 
                     // Remap captions from {path: caption} to {uuid: caption} so Alpine
@@ -102,7 +108,11 @@ class ImageCaptionUpload extends FileUpload
 
             // Not our special format — delegate to parent's callback unchanged.
             if ($parentHydrate) {
-                $component->evaluate($parentHydrate, ['state' => $state]);
+                if (method_exists($component, 'hydrateFiles')) {
+                    $component->hydrateFiles();
+                } else {
+                    $component->evaluate($parentHydrate, ['state' => $state]);
+                }
             }
 
             // Ensure the captions key always exists so $wire.entangle never fails.

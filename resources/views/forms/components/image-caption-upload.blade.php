@@ -281,11 +281,7 @@
              Standard FileUpload Filepond component (identical to original view).
         ──────────────────────────────────────────────────────────────────────── --}}
         <div
-            @if (FilamentView::hasSpaMode())
-                {{-- format-ignore-start --}}x-load="visible || event (ax-modal-opened)"{{-- format-ignore-end --}}
-            @else
-                x-load
-            @endif
+            x-load
             x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('file-upload', 'filament/forms') }}"
             x-data="fileUploadFormComponent({
                         acceptedFileTypes: @js($getAcceptedFileTypes()),
@@ -294,10 +290,10 @@
                         imageEditorViewportHeight: @js($getImageEditorViewportHeight()),
                         imageEditorViewportWidth: @js($getImageEditorViewportWidth()),
                         deleteUploadedFileUsing: async (fileKey) => {
-                            return await $wire.deleteUploadedFile(@js($statePath), fileKey)
+                            return await $wire.callSchemaComponentMethod(@js($getKey()), 'deleteUploadedFile', { fileKey })
                         },
                         getUploadedFilesUsing: async () => {
-                            return await $wire.getFormUploadedFiles(@js($statePath))
+                            return await $wire.callSchemaComponentMethod(@js($getKey()), 'getUploadedFiles')
                         },
                         hasImageEditor: @js($hasImageEditor),
                         hasCircleCropper: @js($hasCircleCropper),
@@ -335,11 +331,11 @@
                         mimeTypeMap: @js($getMimeTypeMap()),
                         maxParallelUploads: @js($getMaxParallelUploads()),
                         removeUploadedFileUsing: async (fileKey) => {
-                            return await $wire.removeFormUploadedFile(@js($statePath), fileKey)
+                            return await $wire.callSchemaComponentMethod(@js($getKey()), 'removeUploadedFile', { fileKey })
                         },
                         removeUploadedFileButtonPosition: @js($getRemoveUploadedFileButtonPosition()),
-                        reorderUploadedFilesUsing: async (files) => {
-                            return await $wire.reorderFormUploadedFiles(@js($statePath), files)
+                        reorderUploadedFilesUsing: async (fileKeys) => {
+                            return await $wire.callSchemaComponentMethod(@js($getKey()), 'reorderUploadedFiles', { fileKeys })
                         },
                         shouldAppendFiles: @js($shouldAppendFiles()),
                         shouldOrientImageFromExif: @js($shouldOrientImagesFromExif()),
