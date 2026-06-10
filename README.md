@@ -31,8 +31,23 @@ A [Filament v3](https://filamentphp.com) form component that extends the built-i
 
 ## Installation
 
+Choose the version that matches your Filament installation:
+
+| Filament | Version |
+|---|---|
+| 3.x | `^1.0` |
+| 4.x | `^2.0` |
+| 5.x | `^3.0` |
+
 ```bash
-composer require imsyuan/filament-image-caption-upload
+# Filament 3.x
+composer require imsyuan/filament-image-caption-upload "^1.0"
+
+# Filament 4.x
+composer require imsyuan/filament-image-caption-upload "^2.0"
+
+# Filament 5.x
+composer require imsyuan/filament-image-caption-upload "^3.0"
 ```
 
 Laravel auto-discovers the service provider — no manual registration needed.
