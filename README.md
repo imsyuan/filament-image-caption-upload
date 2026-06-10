@@ -1,10 +1,10 @@
 # Filament Image Caption Upload
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/imsyuan/filament-image-caption-upload.svg?style=flat-square)](https://packagist.org/packages/imsyuan/filament-image-caption-upload)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/imsyuan/filament-image-caption-upload/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/imsyuan/filament-image-caption-upload/actions?query=workflow%3Atests+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/imsyuan/filament-image-caption-upload/tests.yml?branch=4.x&label=tests&style=flat-square)](https://github.com/imsyuan/filament-image-caption-upload/actions?query=workflow%3Atests+branch%3A4.x)
 [![License](https://img.shields.io/packagist/l/imsyuan/filament-image-caption-upload.svg?style=flat-square)](https://packagist.org/packages/imsyuan/filament-image-caption-upload)
 
-A [Filament v3](https://filamentphp.com) form component that extends the built-in `FileUpload` to attach a per-image caption beneath each uploaded file — with no build step required.
+A [Filament v4](https://filamentphp.com) form component that extends the built-in `FileUpload` to attach a per-image caption beneath each uploaded file — with no build step required.
 
 ![Demo](https://raw.githubusercontent.com/imsyuan/filament-image-caption-upload/main/art/demo.png)
 
@@ -24,8 +24,8 @@ A [Filament v3](https://filamentphp.com) form component that extends the built-i
 ## Requirements
 
 - PHP 8.2+
-- Laravel 10+
-- Filament 3.x
+- Laravel 11+
+- Filament 4.x
 
 ---
 
