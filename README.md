@@ -2,6 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/imsyuan/filament-image-caption-upload.svg?style=flat-square)](https://packagist.org/packages/imsyuan/filament-image-caption-upload)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/imsyuan/filament-image-caption-upload/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/imsyuan/filament-image-caption-upload/actions?query=workflow%3Atests+branch%3Amain)
+[![PHPStan](https://img.shields.io/github/actions/workflow/status/imsyuan/filament-image-caption-upload/phpstan.yml?branch=main&label=phpstan&style=flat-square)](https://github.com/imsyuan/filament-image-caption-upload/actions?query=workflow%3Aphpstan+branch%3Amain)
 [![License](https://img.shields.io/packagist/l/imsyuan/filament-image-caption-upload.svg?style=flat-square)](https://packagist.org/packages/imsyuan/filament-image-caption-upload)
 
 A [Filament v3](https://filamentphp.com) form component that extends the built-in `FileUpload` to attach a per-image caption beneath each uploaded file — with no build step required.
