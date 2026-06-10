@@ -2,12 +2,15 @@
 
 namespace Imsyuan\ImageCaptionUpload;
 
-use Illuminate\Support\ServiceProvider;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class ImageCaptionUploadServiceProvider extends ServiceProvider
+class ImageCaptionUploadServiceProvider extends PackageServiceProvider
 {
-    public function boot(): void
+    public static string $name = 'image-caption-upload';
+
+    public function configurePackage(Package $package): void
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'image-caption-upload');
+        $package->name(static::$name)->hasViews();
     }
 }

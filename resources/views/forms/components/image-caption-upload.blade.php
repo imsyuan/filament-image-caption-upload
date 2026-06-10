@@ -80,10 +80,8 @@
             },
 
             // Sticky cache: build {filepond_id → filament_uuid} once per item; never overwrite.
-            // Filepond renders existing files in reverse order (itemInsertLocation:'before'),
-            // so positional pairing of DOM items vs Livewire state order is unreliable.
-            // Instead we match by filename: Livewire state values are storage paths whose
-            // basename matches the full filename shown in each item's .filepond--file-info-main.
+            // For multiple existing items: reads serverId directly from the FilePond JS instance
+            // via Alpine.$data — reliable regardless of stored filename or UUID naming.
             // For single new uploads (one uncached item) positional pairing is still safe.
             _updateCache() {
                 const state = $wire.get(this._fpItemsPath) ?? {};
@@ -118,28 +116,42 @@
                 }
 
                 // Multiple uncached items (initial page load / component reinit):
-                // build {basename → uuid} from Livewire state and match each DOM item
-                // by the full filename in its label — order-independent.
-                const filenameToUuid = {};
-                for (const uuid of uncachedUuids) {
-                    const path = state[uuid];
-                    if (typeof path === 'string') {
-                        const basename = path.split('/').pop();
-                        if (basename) filenameToUuid[basename] = uuid;
-                    }
-                }
+                // Read fp_id → serverId directly from the FilePond instance so duplicate
+                // filenames and UUID-named storage paths both work correctly.
+                const innerEl = this.$el.querySelector('[x-data*="fileUploadFormComponent"]');
+                const pond = (innerEl && window.Alpine) ? window.Alpine.$data(innerEl)?.pond : null;
 
                 let migrated = false;
-                uncachedItems.forEach(item => {
-                    const fp_id = (item.id ?? '').replace('filepond--item-', '');
-                    if (!fp_id) return;
-                    const labelText = item.querySelector('.filepond--file-info-main')?.textContent?.trim();
-                    if (labelText && labelText in filenameToUuid) {
-                        const realUuid = filenameToUuid[labelText];
-                        this._fpUuidCache[fp_id] = realUuid;
-                        if (this._migrateCaption(fp_id, realUuid)) migrated = true;
+
+                if (pond) {
+                    pond.getFiles().forEach(f => {
+                        if (f.id && f.serverId && !(f.id in this._fpUuidCache)) {
+                            this._fpUuidCache[f.id] = f.serverId;
+                            if (this._migrateCaption(f.id, f.serverId)) migrated = true;
+                        }
+                    });
+                } else {
+                    // Fallback: basename matching (pond inaccessible — e.g., Alpine not yet init).
+                    const filenameToUuid = {};
+                    for (const uuid of uncachedUuids) {
+                        const path = state[uuid];
+                        if (typeof path === 'string') {
+                            const basename = path.split('/').pop();
+                            if (basename) filenameToUuid[basename] = uuid;
+                        }
                     }
-                });
+                    uncachedItems.forEach(item => {
+                        const fp_id = (item.id ?? '').replace('filepond--item-', '');
+                        if (!fp_id) return;
+                        const labelText = item.querySelector('.filepond--file-info-main')?.textContent?.trim();
+                        if (labelText && labelText in filenameToUuid) {
+                            const realUuid = filenameToUuid[labelText];
+                            this._fpUuidCache[fp_id] = realUuid;
+                            if (this._migrateCaption(fp_id, realUuid)) migrated = true;
+                        }
+                    });
+                }
+
                 if (migrated) {
                     $wire.set(this._captionsPath, this._captions, false);
                 }
