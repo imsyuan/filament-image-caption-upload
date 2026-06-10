@@ -1,0 +1,52 @@
+{
+    "name": "imsyuan/filament-image-caption-upload",
+    "description": "Filament v3 FileUpload component with per-image caption support",
+    "version": "1.0.0",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["filament", "filamentphp", "laravel", "file-upload", "image", "caption"],
+    "homepage": "https://github.com/imsyuan/filament-image-caption-upload",
+    "authors": [
+        {
+            "name": "imsyuan",
+            "email": "imsyuan@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Imsyuan\\ImageCaptionUpload\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Imsyuan\\ImageCaptionUpload\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Imsyuan\\ImageCaptionUpload\\ImageCaptionUploadServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "filament/forms": "^3.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0",
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0"
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
