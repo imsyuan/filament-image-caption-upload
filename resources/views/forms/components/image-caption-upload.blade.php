@@ -2,15 +2,16 @@
     use Filament\Support\Enums\Alignment;
     use Filament\Support\Facades\FilamentView;
 
-    $id                      = $getId();
-    $imageCropAspectRatio    = $getImageCropAspectRatio();
-    $imageResizeTargetHeight = $getImageResizeTargetHeight();
-    $imageResizeTargetWidth  = $getImageResizeTargetWidth();
-    $isAvatar                = $isAvatar();
-    $statePath               = $getStatePath();
-    $isDisabled              = $isDisabled();
-    $hasImageEditor          = $hasImageEditor();
-    $hasCircleCropper        = $hasCircleCropper();
+    $id                                      = $getId();
+    $automaticallyCropImagesAspectRatio      = $getAutomaticallyCropImagesAspectRatio();
+    $automaticallyResizeImagesHeight         = $getAutomaticallyResizeImagesHeight();
+    $automaticallyResizeImagesWidth          = $getAutomaticallyResizeImagesWidth();
+    $isAvatar                                = $isAvatar();
+    $livewireKey                             = $getLivewireKey();
+    $statePath                               = $getStatePath();
+    $isDisabled                              = $isDisabled();
+    $hasImageEditor                          = $hasImageEditor();
+    $hasCircleCropper                        = $hasCircleCropper();
 
     $alignment = $getAlignment() ?? Alignment::Start;
     if (! $alignment instanceof Alignment) {
@@ -19,7 +20,7 @@
 
     $captionPlaceholder    = $getCaptionPlaceholder();
     $captionsEntanglePath  = $getCaptionsEntanglePath();
-    $furnitureItemsPath    = $getStatePath();   // e.g. 'data.furniture_items'
+    $furnitureItemsPath    = $getStatePath();
 @endphp
 
 <x-dynamic-component
@@ -304,12 +305,15 @@
                         isSvgEditingConfirmed: @js($isSvgEditingConfirmed()),
                         confirmSvgEditingMessage: @js(__('filament-forms::components.file_upload.editor.svg.messages.confirmation')),
                         disabledSvgEditingMessage: @js(__('filament-forms::components.file_upload.editor.svg.messages.disabled')),
-                        imageCropAspectRatio: @js($imageCropAspectRatio),
+                        automaticallyCropImagesAspectRatio: @js($automaticallyCropImagesAspectRatio),
                         imagePreviewHeight: @js($getImagePreviewHeight()),
-                        imageResizeMode: @js($getImageResizeMode()),
-                        imageResizeTargetHeight: @js($imageResizeTargetHeight),
-                        imageResizeTargetWidth: @js($imageResizeTargetWidth),
-                        imageResizeUpscale: @js($getImageResizeUpscale()),
+                        automaticallyResizeImagesMode: @js($getAutomaticallyResizeImagesMode()),
+                        automaticallyResizeImagesHeight: @js($automaticallyResizeImagesHeight),
+                        automaticallyResizeImagesWidth: @js($automaticallyResizeImagesWidth),
+                        shouldAutomaticallyUpscaleImagesWhenResizing: @js($shouldAutomaticallyUpscaleImagesWhenResizing()),
+                        shouldTransformImage: @js($automaticallyCropImagesAspectRatio || $automaticallyResizeImagesHeight || $automaticallyResizeImagesWidth),
+                        automaticallyOpenImageEditorForAspectRatio: @js($getAutomaticallyOpenImageEditorForAspectRatio()),
+                        maxFilesValidationMessage: @js(__('filament-forms::components.file_upload.messages.max_files', ['max' => $getMaxFiles()])),
                         isAvatar: @js($isAvatar),
                         isDeletable: @js($isDeletable()),
                         isDisabled: @js($isDisabled),
@@ -339,11 +343,13 @@
                         },
                         shouldAppendFiles: @js($shouldAppendFiles()),
                         shouldOrientImageFromExif: @js($shouldOrientImagesFromExif()),
-                        shouldTransformImage: @js($imageCropAspectRatio || $imageResizeTargetHeight || $imageResizeTargetWidth),
                         state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }},
                         uploadButtonPosition: @js($getUploadButtonPosition()),
                         uploadingMessage: @js($getUploadingMessage()),
                         uploadProgressIndicatorPosition: @js($getUploadProgressIndicatorPosition()),
+                        cancelUploadUsing: async (fileKey) => {
+                            return await $wire.cancelFormUpload(@js($statePath), fileKey)
+                        },
                         uploadUsing: (fileKey, file, success, error, progress) => {
                             $wire.upload(
                                 `{{ $statePath }}.${fileKey}`,
@@ -357,9 +363,7 @@
                         },
                     })"
             wire:ignore
-            wire:key="{{ $this->getId() }}.{{ $statePath }}.{{ $field::class }}.{{
-                substr(md5(serialize([$isDisabled])), 0, 64)
-            }}"
+            wire:key="{{ $livewireKey }}.{{ substr(md5(serialize([$isDisabled])), 0, 64) }}"
             {{
                 $attributes
                     ->merge([
