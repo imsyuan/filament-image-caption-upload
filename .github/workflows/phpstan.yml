@@ -5,6 +5,10 @@ on:
     paths:
       - '**.php'
       - 'phpstan.neon.dist'
+      - 'phpstan-baseline.neon'
+      - 'composer.json'
+      - '.github/workflows/phpstan.yml'
+  workflow_dispatch:
 
 jobs:
   phpstan:
