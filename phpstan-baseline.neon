@@ -1,6 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Access to an undefined property Filament\\\\Forms\\\\Contracts\\\\HasForms\\:\\:\\$data\\.$#"
+			message: "#^Access to an undefined property Filament\\\\Schemas\\\\Contracts\\\\HasSchemas&Livewire\\\\Component\\:\\:\\$data\\.$#"
 			count: 3
 			path: src/Forms/Components/ImageCaptionUpload.php
