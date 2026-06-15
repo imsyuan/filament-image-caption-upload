@@ -1,7 +1,7 @@
 {
     "name": "imsyuan/filament-image-caption-upload",
     "description": "Filament v3 FileUpload component with per-image caption support",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "type": "library",
     "license": "MIT",
     "keywords": ["filament", "filamentphp", "laravel", "file-upload", "image", "caption"],

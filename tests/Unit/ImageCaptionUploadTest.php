@@ -43,3 +43,28 @@ it('sanitises dots and brackets in the state key', function (): void {
     expect($component->getCaptionsStateKey())
         ->toBe('_icap_gallery_items_0_');
 });
+
+it('does not include unescaped double quotes inside the Alpine x-data attribute', function (): void {
+    $template = file_get_contents(__DIR__ . '/../../resources/views/forms/components/image-caption-upload.blade.php');
+
+    expect($template)
+        ->not->toContain('querySelector(\'[x-data*="fileUploadFormComponent"]\')')
+        ->toContain('querySelector(\'[x-data*=fileUploadFormComponent]\')');
+});
+
+it('uses a translucent caption input background', function (): void {
+    $template = file_get_contents(__DIR__ . '/../../resources/views/forms/components/image-caption-upload.blade.php');
+
+    expect($template)
+        ->toContain('background-color: rgb(255 255 255 / 0.12);')
+        ->not->toContain('background-color: #ffffff;');
+});
+
+it('maps existing FilePond URLs back to Filament UUIDs', function (): void {
+    $template = file_get_contents(__DIR__ . '/../../resources/views/forms/components/image-caption-upload.blade.php');
+
+    expect($template)
+        ->toContain('fileUploadData?.uploadedFileIndex')
+        ->toContain('uploadedFileIndex[file.source]')
+        ->toContain('uploadedFileIndex[file.serverId]');
+});

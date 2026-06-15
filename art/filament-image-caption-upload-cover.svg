@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2560" height="1440" viewBox="0 0 2560 1440">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="30" flood-color="#302c27" flood-opacity="0.14"/>
+    </filter>
+    <clipPath id="screenshot-clip">
+      <rect x="1641" y="185" width="716" height="942" rx="20"/>
+    </clipPath>
+  </defs>
+
+  <rect width="2560" height="1440" fill="#f4f0e8"/>
+  <circle cx="170" cy="170" r="360" fill="#d9dfd0" opacity="0.72"/>
+  <circle cx="2490" cy="1320" r="430" fill="#ded1c4" opacity="0.68"/>
+
+  <g font-family="Arial, sans-serif">
+    <rect x="210" y="260" width="118" height="12" rx="6" fill="#7a886e"/>
+
+    <text x="210" y="430" fill="#2d342b" font-size="112" font-weight="700">
+      Image Caption
+    </text>
+    <text x="210" y="555" fill="#8a5a44" font-size="112" font-weight="700">
+      Upload
+    </text>
+
+    <text x="216" y="690" fill="#555c53" font-size="45" font-weight="450">
+      Add a caption to every uploaded image.
+    </text>
+    <text x="216" y="755" fill="#555c53" font-size="45" font-weight="450">
+      Reorder images without losing captions.
+    </text>
+
+    <rect x="210" y="865" width="1070" height="2" fill="#d4cec4"/>
+
+    <text x="216" y="955" fill="#6f8062" font-size="31" font-weight="700" letter-spacing="3">
+      COMMUNITY PLUGIN
+    </text>
+    <text x="216" y="1035" fill="#2d342b" font-size="39" font-weight="600">
+      imsyuan/filament-image-caption-upload
+    </text>
+
+    <rect x="210" y="1120" width="430" height="82" rx="18" fill="#2d342b"/>
+    <text x="425" y="1174" fill="#ffffff" font-size="30" font-weight="650" text-anchor="middle">
+      Per-image captions
+    </text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1510" y="110" width="980" height="1220" rx="46" fill="#ffffff"/>
+    <rect x="1511" y="111" width="978" height="1218" rx="45" fill="none" stroke="#ded9d1" stroke-width="3"/>
+  </g>
+
+  <rect x="1580" y="150" width="838" height="1050" rx="28" fill="#fafafa" stroke="#e4e1dc" stroke-width="3"/>
+  <image x="1641" y="185" width="716" height="942" xlink:href="demo.png" preserveAspectRatio="xMidYMid meet" clip-path="url(#screenshot-clip)"/>
+
+  <g font-family="Arial, sans-serif">
+    <circle cx="1630" cy="1252" r="8" fill="#7a886e"/>
+    <text x="1660" y="1264" fill="#666b64" font-size="31" font-weight="500">
+      Real plugin screenshot
+    </text>
+  </g>
+</svg>

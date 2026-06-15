@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.1] - 2026-06-15
+
+### Fixed
+- Map existing FilePond file URLs back to Filament UUIDs when restoring captions
+- Avoid unescaped double quotes in the Alpine `x-data` selector
+
+### Changed
+- Use a translucent caption input style for better image-overlay contrast
+- Refresh the project cover artwork
+
 ## [1.0.0] - 2025-06-10
 
 ### Added
