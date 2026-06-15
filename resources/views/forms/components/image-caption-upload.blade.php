@@ -37,18 +37,18 @@
             font-size: 0.875rem;
             line-height: 1.25rem;
             font-family: inherit;
-            color: #111827;
+            color: #ffffff;
             padding: 0.375rem 0.75rem;
-            border: 1px solid #d1d5db;
+            border: 1px solid rgb(255 255 255 / 0.25);
             border-radius: 0.5rem;
-            background-color: #ffffff;
+            background-color: rgb(255 255 255 / 0.12);
             box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             transition: color 75ms ease, background-color 75ms ease,
                         border-color 75ms ease, box-shadow 75ms ease;
             outline: 2px solid transparent;
             outline-offset: 2px;
         }
-        .ic-caption-input::placeholder { color: #9ca3af; }
+        .ic-caption-input::placeholder { color: #d1d5db; }
         .ic-caption-input:focus {
             outline: none;
             border-color: #3b82f6;
@@ -57,11 +57,11 @@
             z-index: 1;
         }
         .dark .ic-caption-input {
-            background-color: #374151;
+            background-color: rgb(255 255 255 / 0.12);
             color: #ffffff;
-            border-color: #4b5563;
+            border-color: rgb(255 255 255 / 0.25);
         }
-        .dark .ic-caption-input::placeholder { color: #6b7280; }
+        .dark .ic-caption-input::placeholder { color: #d1d5db; }
         .dark .ic-caption-input:focus {
             border-color: #3b82f6;
             box-shadow: 0 0 0 1px #3b82f6 inset;
@@ -129,8 +129,8 @@
             },
 
             // Sticky cache: build {filepond_id → filament_uuid} once per item; never overwrite.
-            // For multiple existing items: reads serverId directly from the FilePond JS instance
-            // via Alpine.$data — reliable regardless of stored filename or UUID naming.
+            // For multiple existing items: maps FilePond URLs back to Filament UUIDs
+            // through the file upload component's uploadedFileIndex.
             // For single new uploads (one uncached item) positional pairing is still safe.
             _updateCache() {
                 const state = $wire.get(this._fpItemsPath) ?? {};
@@ -165,18 +165,24 @@
                 }
 
                 // Multiple uncached items (initial page load / component reinit):
-                // Read fp_id → serverId directly from the FilePond instance so duplicate
-                // filenames and UUID-named storage paths both work correctly.
-                const innerEl = this.$el.querySelector('[x-data*="fileUploadFormComponent"]');
-                const pond = (innerEl && window.Alpine) ? window.Alpine.$data(innerEl)?.pond : null;
+                // Existing FilePond items use their URL as source/serverId. Filament keeps
+                // the corresponding UUID in uploadedFileIndex, so map through that index.
+                const innerEl = this.$el.querySelector('[x-data*=fileUploadFormComponent]');
+                const fileUploadData = (innerEl && window.Alpine) ? window.Alpine.$data(innerEl) : null;
+                const pond = fileUploadData?.pond;
+                const uploadedFileIndex = fileUploadData?.uploadedFileIndex ?? {};
 
                 let migrated = false;
 
                 if (pond) {
-                    pond.getFiles().forEach(f => {
-                        if (f.id && f.serverId && !(f.id in this._fpUuidCache)) {
-                            this._fpUuidCache[f.id] = f.serverId;
-                            if (this._migrateCaption(f.id, f.serverId)) migrated = true;
+                    pond.getFiles().forEach(file => {
+                        const realUuid = file.source instanceof File
+                            ? file.serverId
+                            : (uploadedFileIndex[file.source] ?? uploadedFileIndex[file.serverId] ?? null);
+
+                        if (file.id && realUuid && !(file.id in this._fpUuidCache)) {
+                            this._fpUuidCache[file.id] = realUuid;
+                            if (this._migrateCaption(file.id, realUuid)) migrated = true;
                         }
                     });
                 } else {
