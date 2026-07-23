@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.2] - 2026-07-23
+
+### Security
+- Pin all GitHub Actions to commit SHA to reduce supply-chain risk
+- Add Dependabot configuration for composer and github-actions ecosystems
+- Add `SECURITY.md` with a responsible-disclosure policy
+
 ## [3.0.1] - 2026-06-15
 
 ### Fixed
