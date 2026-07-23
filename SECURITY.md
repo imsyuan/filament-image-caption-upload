@@ -2,10 +2,13 @@
 
 ## Supported Versions
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 3.x (5.x branch, Filament v5) | :white_check_mark: |
-| 2.x and below (Filament v4) | :x: |
+This package is maintained across parallel branches, one per supported Filament major version. Only the latest release on each branch receives security fixes.
+
+| Branch | Filament version | Package version | Supported |
+| ------ | ----------------- | ---------------- | --------- |
+| `5.x`  | v5 (current)       | 3.x               | :white_check_mark: |
+| `4.x`  | v4                 | 2.x               | :white_check_mark: |
+| `main` | v3                 | 1.x               | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
